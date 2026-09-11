@@ -1,0 +1,9 @@
+{
+  "name": "jenkins-work",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo Build successful",
+    "test": "echo Unit tests successful",
+    "lint": "echo Lint successful"
+  }
+}
