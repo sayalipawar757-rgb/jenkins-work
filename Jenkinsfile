@@ -3,9 +3,11 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {
-                git url: 'https://github.com/example/app.git'
-            }
+    steps {
+        git url: 'https://github.com/sayalipawar757-rgb/jenkins-work.git'
+    }
+}
+
         }
 
         stage('Build') {
