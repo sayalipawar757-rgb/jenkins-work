@@ -2,47 +2,39 @@ pipeline {
     agent any
 
     stages {
-
         stage('Checkout') {
             steps {
-                checkout scm
+                git url: 'https://github.com/example/app.git'
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Building the project...'
+                sh "npm install"
+                sh "npm run build"
             }
         }
 
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-            }
-        }
+        stage('Parallel Tests') {
+            parallel {
+                stage('Unit Tests') {
+                    steps {
+                        sh "npm test"
+                    }
+                }
 
-        stage('Deploy') {
-            when {
-                branch 'main'
-            }
-            steps {
-                echo 'Deploying the project...'
+                stage('Lint') {
+                    steps {
+                        sh "npm run lint"
+                    }
+                }
             }
         }
     }
 
     post {
         always {
-            echo 'Archiving test reports...'
-            archiveArtifacts artifacts: '**/test-results/*', allowEmptyArchive: true
-        }
-
-        success {
-            echo 'Build completed successfully!'
-        }
-
-        failure {
-            echo 'Build failed!'
+            sh "rm -rf workspace/*"
         }
     }
 }
