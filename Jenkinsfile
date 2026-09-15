@@ -22,9 +22,13 @@ pipeline {
     }
 
     stages {
-        stage('build') {
-            steps {
-                echo "building"
+        stage('Tests') {
+            parallel {
+                stage('Unit') {
+                    steps {
+                        sh 'echo running integration tests'
+                    }
+                }
             }
         }
     }
