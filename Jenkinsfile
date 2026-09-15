@@ -1,20 +1,24 @@
 pipeline {
     agent any 
     stages {
-        stage('Build') {
-            steps('Build') {
+        stage('Test') {
+            steps {
+                sh 'echo Runnning Tests'
             }
-            stage('Tests') {
-                parallel {
-                    stage('Unit) { steps { sh 'echo Unit tests'}}
-                    stage('Integration') { steps { sh 'echo Integration tests'}}
-                          }
-                          }
-                          }
-                          }
-                          }
-                          }
-                        
+        }
+        stage('Approve') {
+            steps {
+                input message: 'test passed. depoly to production'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'deploying'
+            }
+        }
+    }
+}
 
+            
                     
                           
