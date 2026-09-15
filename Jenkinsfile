@@ -1,43 +1,15 @@
 pipeline {
-    agent any
-
-    stages {
-
-        stage('Checkout') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/sayalipawar757-rgb/jenkins-work.git'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                sh "npm install"
-                sh "npm run build"
-            }
-        }
-
-        stage('Parallel Tests') {
-            parallel {
-
-                stage('Unit Tests') {
-                    steps {
-                        sh "npm test"
-                    }
-                }
-
-                stage('Lint') {
-                    steps {
-                        sh "npm run lint"
-                    }
-                }
-            }
-        }
+    agent any 
+    parameters {
+        string(name: 's1',defaultValue: 'abcd'.description:'s1 to deploy')
+        choice(name: 'ch', choices: ['staging','production'], description: 'Target')
+        booleanParam(name:'bparam', defaultvalue: false, description: 'Skip tests')
     }
-
-    post {
-        always {
-            sh "rm -rf workspace/*"
+    stages {
+        stage('build') {
+            steps {
+                echo "building"
+            }
         }
     }
 }
