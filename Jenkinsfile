@@ -1,35 +1,20 @@
 pipeline {
-    agent any
-
-    parameters {
-        string(
-            name: 's1',
-            defaultValue: 'abcd',
-            description: 's1 to deploy'
-        )
-
-        choice(
-            name: 'ch',
-            choices: ['staging', 'production'],
-            description: 'Target'
-        )
-
-        booleanParam(
-            name: 'bparam',
-            defaultValue: false,
-            description: 'Skip tests'
-        )
-    }
-
+    agent any 
     stages {
-        stage('Tests') {
-            parallel {
-                stage('Unit') {
-                    steps {
-                        sh 'echo running integration tests'
-                    }
-                }
+        stage('Build') {
+            steps('Build') {
             }
-        }
-    }
-}
+            stage('Tests') {
+                parallel {
+                    stage('Unit) { steps { sh 'echo Unit tests'}}
+                    stage('Integration') { steps { sh 'echo Integration tests'}}
+                          }
+                          }
+                          }
+                          }
+                          }
+                          }
+                        
+
+                    
+                          
