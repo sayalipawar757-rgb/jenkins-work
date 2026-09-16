@@ -5,8 +5,8 @@ error : 1. No jenkinsfile found at the expected path.
         
 Root cause : 
              1. (i) It recognizes the dev branch but not the jenkins file this means ;
-                (ii) The jenkinsfile path in the git and while creating a Multibranch pipeline the path and the repository link should be correct.
-                (iii) if there is a name conflict means (upper case / Lower case ) or your created the file in another repo/file but in jenkins your giving a wronng path.
+                (ii) The jenkinsfile path in the git and while creating a Multibranch pipeline the path and the repository link                      should be correct.
+                (iii) if there is a name conflict means (upper case / Lower case ) or your created the file in another repo/                          file but in jenkins your giving a wronng path.
              
              2. (i) If it couldn't find jenkinsfile then how it can run a pipeline.
                 (ii) Because it failed to find a jenkinsfile in the given path, it will skip the stage called "build".
@@ -44,7 +44,8 @@ Finished: SUCCESS
 __question 3__
 
 error: feature/payment exists in Git but does not appear in Jenkins.
-Root cause : : In Jenkins Multibranch Pipeline has not discovered/indexed the new branch, or discover branch is not enabled.
+
+Root cause :  In Jenkins Multibranch Pipeline has not discovered/indexed the new branch, or discover branch is not enabled.
 
 Fix :  (a) jenkins-side :
              (i) Check Jenkins Job configuration page  
@@ -58,13 +59,37 @@ Fix :  (a) jenkins-side :
 Verify : Check the Jenkins indexing log and confirm feature/payment appears as a new branch job.
 
 __question 4__
-error:
-Root cause :
-Fix :
-Verify :
+cause 1 : Wrong revision/branch  selected in checkout configuration
+
+Error : Jenkins says it is building feature/payment, but the checked-out commit belongs to the release branch.
+
+Root Cause : The SCM/checkout configuration may be using a fixed revision, wrong branch specifier, 
+              or an incorrect environment variable instead of dynamically checking out feature/payment.
+
+Fix : Correct the SCM configuration to explicitly use the feature/payment branch/ref and    
+      ensure the checkout step uses that branch's revision. Remove any hard-coded release revision.
+Verify : Run the build again and check the console for Checking out revision. Confirm that the commit 
+        hash matches the current feature/payment head and that the commit message is from the payment feature branch.
+
+cause 2 : Repository state in a Multibranch workspace
+
+Error : The job is building feature/payment, but an old release checkout remains in the workspace.
+Root Cause : A Multibranch Pipeline may be reusing a workspace from another branch/job, or the previous checkout 
+             was not cleaned correctly. This can leave the workspace at an old release revision.
+Fix : Clean/delete the existing workspace and perform a fresh SCM checkout. Configure branch-specific workspaces or ensure the        pipeline performs a clean checkout before building.
+
+Verify : Re-run the feature/payment build after cleaning the workspace. Check git branch, git rev-parse HEAD, and the console            checkout message to confirm that the workspace contains the expected feature/payment.
+
+Overall verification  : Confirm that the checked-out commit hash is da?456 (the expected feature/payment commit) and that the                           console no longer shows the “Merge main into release” commit.
+
 __question 5__
-error:
-Root cause :
-Fix :
-Verify :
+error:  The Deploy condition is allowing branches other than main to reach the Deploy stage.
+
+Root cause : The when condition is not restricted properly to the main branch.
+
+Fix : Change the Deploy condition so that it allows deployment only from the `main` branch. This will prevent dev and feature/         branches from deploying.
+
+Verify : I would run the pipeline on all three branches and check the Jenkins console. Deploy should run only for main.
+
+
 
