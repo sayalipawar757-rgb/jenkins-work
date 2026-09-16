@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Test') {
             when {
-                branchName 'main'
+                branch'main'
             }
             steps {
                 sh 'echo Running tests'
