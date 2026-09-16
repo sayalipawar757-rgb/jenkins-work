@@ -1,7 +1,14 @@
-pipeline  {
-    agent any 
-    parameters {
-        choice(name: 'ENVIRONMENT', choices: ['staging', 'production'], description: 'Target')
-    }
+pipeline {
+    agent any
+
     stages {
-        stage('build') { steps { sh  'echo building'}}
+        stage('Test') {
+            when {
+                branchName 'main'
+            }
+            steps {
+                sh 'echo Running tests'
+            }
+        }
+    }
+}
