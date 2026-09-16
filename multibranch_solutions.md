@@ -1,4 +1,4 @@
-question 1 :
+__question 1__
 
 error : 1. No jenkinsfile found at the expected path.
         2. Skipping build.
@@ -16,14 +16,43 @@ fix : 1. correct the path in the  multibranch job and check whether its in the c
 verify : scan the multibranch job and check the console output to see if its actually succeeded or  failed.
 
 
-question 2
+__question 2__
 
-error :
+error :  The condition/format in the pipeline is invalid " branchName  ' main ' " in the when block{}
+
+Root cause : The branchname is not a valid syntax/format to match a branch 
+
+Fix : I replaced the branchName condition with just only branch in when block{}
+
+Verify : Console Output
+
+Started by user sayali pawar
+Seen branch in repository origin/main
+Obtained Jenkinsfile from 22670688a8bbcaf67c72e89b0b64e74ab2c6e22d
+[Pipeline] Start of Pipeline
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] sh
++ echo Running tests
+Running tests
+[Pipeline] }
+[Pipeline] End of Pipeline
+Finished: SUCCESS
+
+__question 3__
+error:
 Root cause :
 Fix :
 Verify :
 
-question 3
-question 4
-question 5
-question 6
+__question 4__
+error:
+Root cause :
+Fix :
+Verify :
+__question 5__
+error:
+Root cause :
+Fix :
+Verify :
+
