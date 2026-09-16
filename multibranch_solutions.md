@@ -91,5 +91,9 @@ Fix : Change the Deploy condition so that it allows deployment only from the `ma
 
 Verify : I would run the pipeline on all three branches and check the Jenkins console. Deploy should run only for main.
 
+Jenkins successfully checked the GitHub repository and found the Jenkinsfile on the main branch. No new changes were detected, so the branch indexing completed successfully.
+
+Result: Finished: SUCCESS
+
 
 
